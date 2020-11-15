@@ -8,6 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ 
 	TurnTest.class, 
 	StateTest.class, 
+	CoordinateTest.class, 
 	GameBuilderTest.class,
 	GameBuilderTestLF.class,
 })
