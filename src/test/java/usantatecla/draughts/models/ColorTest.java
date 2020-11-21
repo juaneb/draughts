@@ -62,6 +62,6 @@ public class ColorTest {
         Color color = Color.getInitialColor(coordinate);
         assertNull(color);
 
-    }
+    }    
 
 }

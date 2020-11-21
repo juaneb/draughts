@@ -6,8 +6,8 @@ public enum Color {
 
     private final int[] LIMITS = new int[]{5, 2};
 
-    boolean isInitialRow(final int row){
-        switch(this){
+    public boolean isInitialRow(final int row) {
+        switch (this) {
             case WHITE:
                 return row >= LIMITS[this.ordinal()];
             case BLACK:
@@ -16,7 +16,7 @@ public enum Color {
         return false;
     }
 
-    static Color getInitialColor(final Coordinate coordinate) {
+    public static Color  getInitialColor(final Coordinate coordinate) {
         if (coordinate.isBlack())
             for(Color color : Color.values())
                 if (color.isInitialRow(coordinate.getRow()))
