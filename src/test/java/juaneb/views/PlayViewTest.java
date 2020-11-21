@@ -9,21 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.spy;
 
 import juaneb.controllers.PlayController;
-import juaneb.controllers.StartController;
 import juaneb.models.Game;
 import juaneb.models.State;
-import juaneb.models.StateValue;
 import juaneb.models.Color;
-import juaneb.models.Coordinate;
 import juaneb.utils.Console;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,13 +33,21 @@ public class PlayViewTest {
     @Mock
     Console console;
 
+    @Mock
+    PlayController playController;
+
     @InjectMocks
-    PlayView playView = new PlayView();
+    PlayView playView;
 
 
     @Before
     public void before() {       
+            initMocks(this);
+    }
 
+    @Test (expected = AssertionError.class)
+    public void testGivenInteractWithNullValueThenAssertionError() {
+        playView.interact(null);
     }
 
     @Test
@@ -59,11 +59,15 @@ public class PlayViewTest {
 
         PlayController playController = new PlayController(game, state);
 
-        when(this.console.readString("Mueven las blancas: ")).thenReturn("-1");
-        this.playView.interact(playController);
+        when(playController.getColor()).thenReturn(Color.WHITE);
+        when(console.readString("Mueven las blancas: ")).thenReturn("-1");
+
+        playView.interact(playController);
+        verify(playController).cancel();
     }
 
-    @Test
+
+     @Test
     public void testGivenBadFormat() {
 
         Game game = new Game();
@@ -72,8 +76,9 @@ public class PlayViewTest {
 
         PlayController playController = new PlayController(game, state);
 
-        when(this.console.readString("Mueven las blancas: ")).thenReturn("patata");
+        when(console.readString("Mueven las blancas: ")).thenReturn("patata");
         this.playView.interact(playController);
+        verify(console).writeln("Error!!! Formato incorrecto");
 
     }
 
@@ -88,13 +93,8 @@ public class PlayViewTest {
         when(this.console.readString("Mueven las blancas: ")).thenReturn("61.52");
         this.playView.interact(playController);
 
-        /*
-         * Coordinate coordinateRead =
-         * this.coordinateView.read(ENTER_COORDINATE_TO_PUT); Coordinate
-         * coordinateExpected = new Coordinate(0, 0);
-         * assertEquals(coordinateExpected.getRow(), coordinateRead.getRow());
-         * assertEquals(coordinateExpected.getColumn(), coordinateRead.getColumn());
-         */
+        verify(console).writeln("Mueven las negras: ");
 
     }
+  
 }

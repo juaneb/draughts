@@ -7,32 +7,38 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.spy;
+
 
 import juaneb.controllers.StartController;
-import juaneb.models.Game;
-import juaneb.models.State;
-import juaneb.models.StateValue;
-import juaneb.utils.Console;
 
 public class StartViewTest {
 
     static final String TITTLE = "Draughts";
 
     @Mock
-    Console console;
+    private StartController startController;
+
+    @Mock
+    private GameView gameView;
 
     @InjectMocks
-    StartView startView = new StartView();
+    private StartView startView;
+
+    @Before
+    public void before() {
+        initMocks(this);        
+    }
+
+    @Test(expected = AssertionError.class)
+    public void giveNullArgumentotoInteractThenSouldTrhowError(){
+        startView.interact(null);
+    }
 
     @Test
-    public void testWellcomeText() {
-        //¿realmente hay que probar algo en el startview?
+    public void testStartView() {        
+        startView.interact(startController);
+        verify(startController).start();        
     }
 
 }
