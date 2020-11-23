@@ -21,6 +21,7 @@ class Board {
     }
 
     void put(Coordinate coordinate, Piece piece) {
+        assert coordinate != null;
         this.pieces[coordinate.getRow()][coordinate.getColumn()] = piece;
     }
 

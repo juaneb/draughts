@@ -7,6 +7,7 @@ public class Game {
 
 	private Board board;
 	private Turn turn;
+	private static final int MAX_MOVEMENTS = 2;
 
 	Game(Board board) {
 		this.turn = new Turn();
@@ -92,9 +93,13 @@ public class Game {
 	}
 
 	private Error isCorrectGlobalMove(Error error, List<Coordinate> removedCoordinates, Coordinate... coordinates){
+		boolean isMovementGreaterThanAllowed = coordinates.length > MAX_MOVEMENTS;
+		boolean isMovementGreaterThanEatenPieces = coordinates.length > removedCoordinates.size() + 1;
+		
 		if (error != null)
 			return error;
-		if (coordinates.length > 2 && coordinates.length > removedCoordinates.size() + 1)
+		
+		if (isMovementGreaterThanAllowed && isMovementGreaterThanEatenPieces)
 			return Error.TOO_MUCH_JUMPS;
 		return null;
 	}

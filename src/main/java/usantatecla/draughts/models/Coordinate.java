@@ -10,6 +10,7 @@ public class Coordinate {
     private static final int LOWER_LIMIT = 0;
     private static final int UPPER_LIMIT = 7;
     private static final int DIMENSION = UPPER_LIMIT + 1;
+    
 
     public Coordinate(int row, int column) {
         this.row = row;
@@ -32,16 +33,22 @@ public class Coordinate {
     }
 
     private boolean isWithIn() {
-        return Coordinate.LOWER_LIMIT <= row && row <= Coordinate.UPPER_LIMIT
-                && Coordinate.LOWER_LIMIT <= column && column <= Coordinate.UPPER_LIMIT;
+        boolean isRowInTheLowerLimit = Coordinate.LOWER_LIMIT <= row;       
+        boolean isRowInTheUpperLimit = row <= Coordinate.UPPER_LIMIT;
+        boolean isColumnInTheLowerLimit = Coordinate.LOWER_LIMIT <= column;
+        boolean isColumnInTheUpperLimit = column <= Coordinate.UPPER_LIMIT;
+        
+        return  isRowInTheLowerLimit && isRowInTheUpperLimit && isColumnInTheLowerLimit && isColumnInTheUpperLimit;
     }
 
     private Coordinate substract(Coordinate coordinate) {
-        return new Coordinate(this.row - coordinate.row, this.column - coordinate.column);
+        assert coordinate != null;
+        return new Coordinate(getRow() - coordinate.row, getColumn() - coordinate.column);
     }
 
     private Coordinate plus(Coordinate coordinate) {
-        return new Coordinate(this.row + coordinate.row, this.column + coordinate.column);
+        assert coordinate != null;
+        return new Coordinate(getRow() + coordinate.row, getColumn() + coordinate.column);
     }
 
     Direction getDirection(Coordinate coordinate) {
@@ -85,15 +92,15 @@ public class Coordinate {
     }
 
     boolean isBlack() {
-        return (this.row + this.column) % 2 != 0;
+        return (getRow() + getColumn()) % 2 != 0;
     }
 
     public boolean isLast() {
-        return this.row == Coordinate.UPPER_LIMIT;
+        return getRow() == Coordinate.UPPER_LIMIT;
     }
 
     public boolean isFirst() {
-        return this.row == Coordinate.LOWER_LIMIT;
+        return getRow() == Coordinate.LOWER_LIMIT;
     }
 
     int getRow() {

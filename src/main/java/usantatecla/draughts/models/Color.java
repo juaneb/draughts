@@ -6,7 +6,7 @@ public enum Color {
 
     private final int[] LIMITS = new int[]{5, 2};
 
-    public boolean isInitialRow(final int row) {
+    private boolean isInitialRow(final int row) {
         switch (this) {
             case WHITE:
                 return row >= LIMITS[this.ordinal()];
